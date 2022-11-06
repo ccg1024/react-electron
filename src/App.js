@@ -1,25 +1,22 @@
-import logo from './logo.svg';
+import React, { useState, useCallback } from 'react';
+import Editor from './editor'
+import Preview from './preview';
 import './App.css';
 
-function App() {
+const App = () => {
+
+  const [doc, setDoc] = useState('# hello word')
+
+  const handleDocChange = useCallback(newDoc => {
+    setDoc(newDoc)
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <Editor initialDoc={doc} onChange={handleDocChange} />
+      <Preview doc={doc} />
     </div>
-  );
+  )
 }
 
 export default App;

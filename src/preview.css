@@ -3,7 +3,8 @@
   padding: 12px;
   box-sizing: border-box;
   overflow: auto;
-  color: #abb2bf;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.24)
 }
 
 /* .preview pre div { */

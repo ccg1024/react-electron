@@ -76,3 +76,7 @@ using electron and react to build a simple markdown editor.
 ### `npm run electron:serve`
 
 start electron and react together.
+
+### Screenshot
+
+![screenshot](./screenshote.png)

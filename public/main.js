@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron")
 const path = require('path')
-const fs = require('fs')
+// const fs = require('fs')
 
 require('@electron/remote/main').initialize()
 
@@ -31,6 +31,8 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1000,
     height: 800,
+    vibrancy: 'under-window',
+    visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,  // makd sure to use `path` and `fs` in react module
       enableRemoteModule: true,

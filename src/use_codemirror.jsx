@@ -17,7 +17,7 @@ export const transparentTheme = EditorView.theme({
   }
 })
 
-const my_syntaxHighlighting = HighlightStyle.define([
+export const my_syntaxHighlighting = HighlightStyle.define([
   {
     tag: tags.heading1,
     fontSize: '1.6em',

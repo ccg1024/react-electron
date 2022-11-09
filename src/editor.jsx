@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect } from 'react'
-import useCodeMirror from './use_codemirror'
+import useCodeMirror, { transparentTheme, my_syntaxHighlighting } from './use_codemirror'
 import './editor.css'
+import { EditorState } from '@codemirror/state'
+import { EditorView, keymap, highlightActiveLine, lineNumbers, highlightActiveLineGutter } from '@codemirror/view'
+import { defaultKeymap, historyKeymap, history } from '@codemirror/commands'
+import { indentOnInput, bracketMatching, syntaxHighlighting } from '@codemirror/language'
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
+import { languages } from '@codemirror/language-data'
+import { oneDark } from '@codemirror/theme-one-dark'
+
+const fs = window.electronAPI.require('fs')
 
 
-const Editor = ({ initialDoc, onChange }) => {
-  // const { onChange } = props.onChange
+const Editor = ({ initialDoc, onChange, filePath }) => {
   const handleChange = useCallback(
     state => onChange(state.doc.toString()),
     [onChange]
@@ -16,11 +24,53 @@ const Editor = ({ initialDoc, onChange }) => {
 
   useEffect(() => {
     if (editorView) {
-      // do othing
+      // do nothing
     }
+    if (filePath) {
+      console.log('got new file and reset codemirro with ' + filePath)
+      editorView.setState(EditorState.create({
+        doc: initialDoc,
+        extensions: [
+          keymap.of([...defaultKeymap, ...historyKeymap]),
+          lineNumbers(),
+          highlightActiveLineGutter(),
+          history(),
+          indentOnInput(),
+          bracketMatching(),
+          highlightActiveLine(),
+          markdown({
+            base: markdownLanguage,
+            codeLanguages: languages,
+            addKeymap: true
+          }),
+          oneDark,
+          transparentTheme,
+          syntaxHighlighting(my_syntaxHighlighting),
+          EditorView.lineWrapping,
+          EditorView.updateListener.of(update => {
+            if (update.changes) {
+              handleChange && handleChange(update.state)
+            }
+          })
+        ]
+      }))
+    }
+  }, [editorView, filePath])
+
+  // for now, this function just run twice, this initial one, when editorView is empty
+  // after initial editorView, is the second time. So, just will have one ipc listener
+  useEffect(() => {
+    if (editorView) {
+      window.electronAPI.saveFile((_event, saveFilePath) => {
+        console.log('current save path: ' + saveFilePath)
+        fs.writeFileSync(saveFilePath, editorView.state.doc.toString())
+      })
+      console.log('run save effect')
+    }
+    console.log("run save outerlop")
   }, [editorView])
 
-  return <div className='editor-wrapper' ref={refContainer}></div>
+  return <div className='editor-wrapper' ref={refContainer} id='markdown-editor'></div>
 }
 
 export default Editor

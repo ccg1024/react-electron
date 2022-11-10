@@ -37,7 +37,7 @@ const App = () => {
   const handleScrollFirst = (scroll) => {
 
     let currentPercent = (scroll.target.scrollTop + scroll.target.clientHeight) / scroll.target.scrollHeight
-    if (currentPercent > 0.95) {
+    if (currentPercent >= 0.95) {
       secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight
     } else {
       secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight * currentPercent - secondDivRef.current.clientHeight

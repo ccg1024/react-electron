@@ -189,6 +189,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   // clean open file path
 
+  console.log('into close window')
   openFilePath = ""
   if (process.platform !== 'darwin') {
     app.quit()

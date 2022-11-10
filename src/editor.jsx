@@ -71,7 +71,12 @@ const Editor = ({ initialDoc, onChange, filePath }) => {
     console.log("run save outerlop")
   }, [editorView])
 
-  return <Box className='editor-wrapper' ref={refContainer} id='markdown-editor' ></Box>
+  return <Box
+    className='editor-wrapper'
+    ref={refContainer}
+    height='100%'
+    overflow='auto'
+  ></Box>
 }
 
 export default Editor

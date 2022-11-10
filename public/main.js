@@ -41,6 +41,19 @@ function createWindow() {
     }
   })
 
+  win.on('close', function(e) {
+    let response = dialog.showMessageBoxSync(this, {
+      type: 'info',
+      buttons: ['Ok', 'Exit'],
+      title: 'Warning',
+      cancelId: 1,
+      defaultId: 0,
+      detail: 'The app is under development, make sure everything is saved before exiting.'
+    });
+
+    if (response == 1) e.preventDefault();
+  });
+
   // menu template ----------------------------------------
   const template = [
     // { role: 'appMenu' }
@@ -63,21 +76,25 @@ function createWindow() {
       label: 'File',
       submenu: [
         {
-          label: "open file", click: async () => {
+          label: "open file",
+          click: async () => {
             const filePath = await handleOpen()
             if (filePath) {
               win.webContents.send('open-file', filePath)
               openFilePath = filePath
             }
-          }
+          },
+          accelerator: process.platform === 'darwin' ? 'Cmd+o' : 'Ctrl+o',
         },
         {
-          label: "save file", click: () => {
+          label: "save file",
+          click: () => {
             if (openFilePath !== '') {
               console.log('using save file piple')
               win.webContents.send('save-file', openFilePath)
             }
-          }
+          },
+          accelerator: process.platform === 'darwin' ? 'Cmd+s' : 'Ctrl+s',
         },
         { type: 'separator' },
         isMac ? { role: 'close' } : { role: 'quit' }

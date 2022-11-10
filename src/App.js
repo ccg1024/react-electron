@@ -11,7 +11,7 @@ const fs = window.electronAPI.require('fs')
 
 const App = () => {
 
-  const [doc, setDoc] = useState('# hello word')
+  const [doc, setDoc] = useState('# In development...')
   const [filePath, setFilePath] = useState('')
 
   const handleDocChange = useCallback(newDoc => {
@@ -37,7 +37,7 @@ const App = () => {
   const handleScrollFirst = (scroll) => {
 
     let currentPercent = (scroll.target.scrollTop + scroll.target.clientHeight) / scroll.target.scrollHeight
-    if (currentPercent > 0.98) {
+    if (currentPercent > 0.95) {
       secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight
     } else {
       secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight * currentPercent - secondDivRef.current.clientHeight
@@ -55,21 +55,12 @@ const App = () => {
           overflow='auto'
           height='100%'
           onScrollCapture={handleScrollFirst}
-          sx={{
-            '&::-webkit-scrollbar': {
-              width: '16px',
-              borderRadius: '8px',
-              backgroundColor: `rgba(0, 0, 0, 0.05)`,
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: `rgba(0, 0, 0, 0.05)`,
-            },
-          }}
         >
           <Editor initialDoc={doc} onChange={handleDocChange} filePath={filePath} />
         </Box>
 
         <Box
+          className='preview_parent'
           overflow='auto'
           backgroundColor='#000000'
           height='100%'

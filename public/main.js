@@ -31,8 +31,8 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1000,
     height: 800,
-    vibrancy: 'under-window',
-    visualEffectState: 'active',
+    // vibrancy: 'under-window',
+    // visualEffectState: 'active',
     webPreferences: {
       nodeIntegration: true,  // makd sure to use `path` and `fs` in react module
       enableRemoteModule: true,

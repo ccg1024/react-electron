@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import useCodeMirror, { transparentTheme, my_syntaxHighlighting } from './use_codemirror'
-import './editor.css'
+import useCodeMirror, { transparentTheme, my_syntaxHighlighting } from './components/use_codemirror'
 import { EditorState } from '@codemirror/state'
 import { EditorView, keymap, highlightActiveLine, lineNumbers, highlightActiveLineGutter } from '@codemirror/view'
 import { defaultKeymap, historyKeymap, history } from '@codemirror/commands'
@@ -8,6 +7,8 @@ import { indentOnInput, bracketMatching, syntaxHighlighting } from '@codemirror/
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { oneDark } from '@codemirror/theme-one-dark'
+import { Box } from '@chakra-ui/react'
+import './css/editor.css'
 
 const fs = window.electronAPI.require('fs')
 
@@ -70,7 +71,7 @@ const Editor = ({ initialDoc, onChange, filePath }) => {
     console.log("run save outerlop")
   }, [editorView])
 
-  return <div className='editor-wrapper' ref={refContainer} id='markdown-editor'></div>
+  return <Box className='editor-wrapper' ref={refContainer} id='markdown-editor' ></Box>
 }
 
 export default Editor

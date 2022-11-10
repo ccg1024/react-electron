@@ -5,8 +5,23 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import {
+  Quote,
+  MarkdownTd,
+  MarkdownTh,
+  MarkdownTr,
+  MarkdownLink,
+  MarkdownText,
+  MarkdownImage,
+  MarkdownOList,
+  MarkdownTable,
+  MarkdownTbody,
+  MarkdownThead,
+  MarkdownUList,
+  MarkdownListItem,
+} from './components/markdown_tag'
 import 'katex/dist/katex.min.css'
-import './preview.css'
+import './css/preview.css'
 
 
 const Preview = ({ doc }) => {
@@ -15,7 +30,19 @@ const Preview = ({ doc }) => {
       className="preview"
       children={doc}
       components={{
-
+        blockquote: Quote,
+        a: MarkdownLink,
+        ul: MarkdownUList,
+        ol: MarkdownOList,
+        li: MarkdownListItem,
+        p: MarkdownText,
+        img: MarkdownImage,
+        table: MarkdownTable,
+        thead: MarkdownThead,
+        tbody: MarkdownTbody,
+        tr: MarkdownTr,
+        td: MarkdownTd,
+        th: MarkdownTh,
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || '')
           return !inline && match ? (

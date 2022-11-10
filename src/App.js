@@ -1,21 +1,13 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { Box } from '@chakra-ui/react'
 import Editor from './editor'
 import Preview from './preview';
-import './App.css';
+import { SimpleGrid } from '@chakra-ui/react'
+import './css/App.css';
+import './css/css2.css'
 
 // const fs = window.require('fs')
 const fs = window.electronAPI.require('fs')
-
-// const saveClick = (doc) => {
-//   window.electronAPI.saveText(doc)
-//   console.log('click save button')
-// }
-
-// async function openFile(setFilePath) {
-//   const filePath = await window.electronAPI.openFile()
-//   console.log(filePath)
-//   setFilePath(filePath)
-// }
 
 const App = () => {
 
@@ -29,12 +21,9 @@ const App = () => {
   useEffect(() => {
     window.electronAPI.openFile(async (_event, value) => {
       console.log("App.js got new file path: " + value)
-      // setDoc(value)
-      // setDoc('change file')
       fs.readFile(value, 'utf-8', (err, data) => {
         if (err) throw err
         else {
-          // console.log(data)
           setDoc(data)
           setFilePath(value)
         }
@@ -42,13 +31,53 @@ const App = () => {
     })
   }, [])
 
+  // const firstDivRef = useRef();
+  const secondDivRef = useRef();
+
+  const handleScrollFirst = (scroll) => {
+
+    let currentPercent = (scroll.target.scrollTop + scroll.target.clientHeight) / scroll.target.scrollHeight
+    if (currentPercent > 0.98) {
+      secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight
+    } else {
+      secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight * currentPercent - secondDivRef.current.clientHeight
+    }
+  }
+
+  // const handleScrollSecond = (scroll) => {
+  //   firstDivRef.current.scrollTop = scroll.target.scrollTop;
+  // }
 
   return (
     <>
-      <div className='app'>
-        <Editor initialDoc={doc} onChange={handleDocChange} filePath={filePath} />
-        <Preview doc={doc} />
-      </div>
+      <SimpleGrid columns={2} height="100%">
+        <Box
+          overflow='auto'
+          height='100%'
+          onScrollCapture={handleScrollFirst}
+          sx={{
+            '&::-webkit-scrollbar': {
+              width: '16px',
+              borderRadius: '8px',
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+            },
+          }}
+        >
+          <Editor initialDoc={doc} onChange={handleDocChange} filePath={filePath} />
+        </Box>
+
+        <Box
+          overflow='auto'
+          backgroundColor='#000000'
+          height='100%'
+          ref={secondDivRef}
+        >
+          <Preview doc={doc} />
+        </Box>
+      </SimpleGrid>
     </>
   )
 }

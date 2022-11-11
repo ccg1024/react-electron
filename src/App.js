@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Box } from '@chakra-ui/react'
 import Editor from './editor'
 import Preview from './preview';
@@ -31,22 +31,20 @@ const App = () => {
     })
   }, [])
 
-  // const firstDivRef = useRef();
-  const secondDivRef = useRef();
-
   const handleScrollFirst = (scroll) => {
-
+    const pre_doc = document.getElementById('preview-scroll')
     let currentPercent = (scroll.target.scrollTop + scroll.target.clientHeight) / scroll.target.scrollHeight
-    if (currentPercent >= 0.95) {
-      secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight
-    } else {
-      secondDivRef.current.scrollTop = secondDivRef.current.scrollHeight * currentPercent - secondDivRef.current.clientHeight
-    }
+    // if (currentPercent >= 0.9) {
+    //   pre_doc.scrollTo({
+    //     top: pre_doc.scrollHeight,
+    //     left: pre_doc.scrollWidth,
+    //     behavior: 'auto'
+    //   })
+    // } else {
+    //   pre_doc.scrollTop = pre_doc.scrollHeight * currentPercent - pre_doc.clientHeight
+    // }
+    pre_doc.scrollTop = pre_doc.scrollHeight * currentPercent - pre_doc.clientHeight
   }
-
-  // const handleScrollSecond = (scroll) => {
-  //   firstDivRef.current.scrollTop = scroll.target.scrollTop;
-  // }
 
   return (
     <>
@@ -60,11 +58,11 @@ const App = () => {
         </Box>
 
         <Box
+          id='preview-scroll'
           className='preview_parent'
           overflow='auto'
           backgroundColor='#000000'
           height='100%'
-          ref={secondDivRef}
         >
           <Preview doc={doc} />
         </Box>

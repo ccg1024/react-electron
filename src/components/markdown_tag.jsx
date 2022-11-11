@@ -29,7 +29,7 @@ export const Quote = ({ children }) => {
   return (
     <Box
       borderRadius='5px'
-      bg='rgba(255, 255, 255, 0.08)'
+      bg='rgba(255, 255, 255, 0.12)'
       pl={2}
       pr={2}
       mt={2}

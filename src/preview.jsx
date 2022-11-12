@@ -20,6 +20,7 @@ import {
   MarkdownThead,
   MarkdownUList,
   MarkdownListItem,
+  MarkdownCode,
 } from './components/markdown_tag'
 import 'katex/dist/katex.min.css'
 import './css/preview.css'
@@ -57,9 +58,9 @@ const Preview = ({ doc }) => {
               {...props}
             />
           ) : (
-            <code className={className} {...props}>
+            <MarkdownCode className={className} {...props}>
               {children}
-            </code>
+            </MarkdownCode>
           )
         }
       }}

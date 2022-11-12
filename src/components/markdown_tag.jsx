@@ -14,6 +14,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Code
 } from '@chakra-ui/react'
 
 export const MarkdownDiv = ({ props, children }) => {
@@ -44,7 +45,7 @@ export const Quote = ({ children }) => {
 
 export const MarkdownLink = ({ href, props, children }) => {
   return (
-    <Link href={href} textAlign="justify" {...props}>
+    <Link href={href} textAlign="justify" {...props} color='#ff63c3' textUnderlineOffset={3}>
       {children}
     </Link>
   )
@@ -143,5 +144,18 @@ export const MarkdownOList = ({ props, children }) => {
     >
       {children}
     </OrderedList>
+  )
+}
+
+export const MarkdownCode = ({ props, children }) => {
+  return (
+    <Code
+      background="whiteAlpha.400"
+      color='#ff63c3'
+      fontWeight='bold'
+      {...props}
+    >
+      {children}
+    </Code>
   )
 }

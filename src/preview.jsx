@@ -5,6 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import rehypeRaw from 'rehype-raw'
 import {
   Quote,
   MarkdownTd,
@@ -28,7 +29,7 @@ const Preview = ({ doc }) => {
   return (
     <ReactMarkdown
       className="preview"
-      children={doc}
+      children={doc + "</br>"}
       components={{
         blockquote: Quote,
         a: MarkdownLink,
@@ -63,7 +64,7 @@ const Preview = ({ doc }) => {
         }
       }}
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeKatex]}
+      rehypePlugins={[rehypeKatex, rehypeRaw]}
     />
   )
 }
